@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="paints")
 public class PaintingResponseDto extends ResponseDTO {
-	
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

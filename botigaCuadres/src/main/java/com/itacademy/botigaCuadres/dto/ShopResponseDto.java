@@ -17,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="shops")
 public class ShopResponseDto extends ResponseDTO {
-	
+
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
