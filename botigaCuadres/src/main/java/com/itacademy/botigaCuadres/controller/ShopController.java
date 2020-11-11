@@ -1,5 +1,7 @@
 package com.itacademy.botigaCuadres.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itacademy.botigaCuadres.controller.exceptions.InvalidJson;
 import com.itacademy.botigaCuadres.controller.exceptions.ResourceNotFound;
 import com.itacademy.botigaCuadres.controller.exceptions.ShopIsFull;
 import com.itacademy.botigaCuadres.dto.PaintingResponseDto;
@@ -40,26 +43,39 @@ public class ShopController {
 	}
 	
 	@PostMapping(path="/shops/", consumes="application/json")
-	public void insertShop(@RequestBody ShopResponseDto shop) {
+	public ResponseEntity<ShopResponseDto> insertShop(@RequestBody ShopResponseDto shop) throws InvalidJson {
+		if (Validate.isShopValid(shop).equals(false)) {
+			throw new InvalidJson();
+		}
+		
 		shopService.insertShop(shop);
+		return new ResponseEntity<>(shop,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/shops/{id}")
 	public void deleteShop(@PathVariable int id) throws ResourceNotFound {
-		ShopResponseDto tempShop = shopService.getShop(id);
-		if (tempShop==null) {
-			throw new ResourceNotFound("Shop not found");
+		Optional<ShopResponseDto> tempShop = shopService.getShop(id);
+		if (tempShop.isEmpty()) {
+			throw new ResourceNotFound(id);
 		}
-		shopService.deleteShop(tempShop);
-		paintingService.deleteAllPaintings(tempShop);
+		shopService.deleteShop(tempShop.get());
+		paintingService.deleteAllPaintings(tempShop.get());
 	}
 	
 	@PostMapping(path="/shops/{id}/painting", consumes="application/json")
-	public void addPainting(@PathVariable int id,@RequestBody PaintingResponseDto painting) throws ShopIsFull {
-		ShopResponseDto tempShop = shopService.getShop(id);
-		if (tempShop.hasSpace()) {
-			painting.setShop(tempShop);
+	public ResponseEntity<PaintingResponseDto> addPainting(@PathVariable int id,@RequestBody PaintingResponseDto painting) throws 
+																						ShopIsFull, ResourceNotFound, InvalidJson {
+		Optional<ShopResponseDto> tempShop = shopService.getShop(id);
+		if(tempShop.isEmpty()) {
+			throw new ResourceNotFound(id);
+		}
+		if (Validate.isPaintValid(painting).equals(false)) {
+			throw new InvalidJson();
+		}
+		if (tempShop.get().hasSpace()) {
+			painting.setShop(tempShop.get());
 			paintingService.savePainting(painting);
+			return new ResponseEntity<>(painting, HttpStatus.OK);
 		} else {
 			throw new ShopIsFull("Shop is full");
 		}
@@ -68,12 +84,12 @@ public class ShopController {
 	
 	@GetMapping("/shops/{id}/painting")
 	public ResponseEntity<Iterable<PaintingResponseDto>> viewPaintings(@PathVariable int id) throws ResourceNotFound {
-		ShopResponseDto tempShop = shopService.getShop(id);
-		if (tempShop.getName().isEmpty()) {
-			throw new ResourceNotFound("Shop not found: " + id);
+		Optional<ShopResponseDto> tempShop = shopService.getShop(id);
+		if (tempShop.isEmpty()) {
+			throw new ResourceNotFound(id);
 		}
 
-		return new ResponseEntity<>(paintingService.getPaintingByShop(tempShop), HttpStatus.OK);
+		return new ResponseEntity<>(paintingService.getPaintingByShop(tempShop.get()), HttpStatus.OK);
 	}
 	
 

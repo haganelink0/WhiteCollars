@@ -1,19 +1,25 @@
-create table paints (
-    id int not null,
-	created_at timestamp not null,
-	updated_at timestamp not null,
-    author varchar(255) not null,
-    price int not null,
-    title varchar(255) not null,
-	shop_id int not null,
-    primary key (id)
+creaTE database if not exists `botiga`;
+use `botiga`;
+
+CREATE TABLE `shops` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `max_capacity` int(11) DEFAULT NULL,
+  `shop_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 )
 
-create table shops (
-    id int not null,
-created_at timestamp not null,
-updated_at timestamp not null,
-    max_capacity int not null,
-    shop_name varchar(255) not null,
-    primary key (id)
+CREATE TABLE `paints` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `shop_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKgtpm1k6sntnvv9munqkme0j8y` (`shop_id`),
+  CONSTRAINT `FKgtpm1k6sntnvv9munqkme0j8y` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`)
 )
+

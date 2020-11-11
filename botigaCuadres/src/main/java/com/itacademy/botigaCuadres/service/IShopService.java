@@ -1,5 +1,7 @@
 package com.itacademy.botigaCuadres.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.itacademy.botigaCuadres.dto.ShopResponseDto;
@@ -7,7 +9,7 @@ import com.itacademy.botigaCuadres.dto.ShopResponseDto;
 @Service
 public interface IShopService {
 	
-	ShopResponseDto getShop(int id);
+	Optional<ShopResponseDto> getShop(int id);
 	
 	Iterable<ShopResponseDto> getAll();
 	
