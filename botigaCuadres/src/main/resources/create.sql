@@ -1,4 +1,4 @@
-creaTE database if not exists `botiga`;
+CREATE DATABASE IF NOT EXISTS `botiga`;
 use `botiga`;
 
 CREATE TABLE `shops` (
