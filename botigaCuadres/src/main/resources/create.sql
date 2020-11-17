@@ -8,7 +8,7 @@ CREATE TABLE `shops` (
   `max_capacity` int(11) DEFAULT NULL,
   `shop_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
+);
 
 CREATE TABLE `paints` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -20,5 +20,5 @@ CREATE TABLE `paints` (
   `shop_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`)
-)
+);
 
