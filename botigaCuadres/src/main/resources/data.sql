@@ -7,6 +7,6 @@ INSERT INTO `botiga`.`paints` (`id`,`created_at`,`updated_at`,`author`,`price`,`
 
 INSERT INTO `botiga`.`paints` (`id`,`created_at`,`updated_at`,`author`,`price`,`title`,`shop_id`) VALUES (2,'2020-10-20 10:00:00','2020-10-21 12:48:52','Raphael',13548762,'La resurrección de cristo',1);
 
-INSERT INTO `botiga`.`paints` (`id`,`created_at`,`updated_at`,`author`,`price`,`title`,`shop_id`) VALUES (1,'2020-10-09 08:48:12','2020-10-09 08:48:12','Sandro Botticeli',987465134,'La primavera',2);
+INSERT INTO `botiga`.`paints` (`id`,`created_at`,`updated_at`,`author`,`price`,`title`,`shop_id`) VALUES (3,'2020-10-09 08:48:12','2020-10-09 08:48:12','Sandro Botticeli',987465134,'La primavera',2);
 
-INSERT INTO `botiga`.`paints` (`id`,`created_at`,`updated_at`,`author`,`price`,`title`,`shop_id`) VALUES (2,'2020-10-11 17:38:42','2020-10-11 18:00:00','Michelangelo',35798420,'El arca de Noé',2);
+INSERT INTO `botiga`.`paints` (`id`,`created_at`,`updated_at`,`author`,`price`,`title`,`shop_id`) VALUES (4,'2020-10-11 17:38:42','2020-10-11 18:00:00','Michelangelo',35798420,'El arca de Noé',2);
